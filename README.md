@@ -171,7 +171,7 @@ Retrieve the analysis status and report.
   "task_id": "4700f44b-bfa2-4fee-9b82-e8d2d71a54b3",
   "state": "SUCCESS",
   "result": {
-      "score": 50,
+      "score": 0,
       "verdict": "benign",
       "reasons": ["None"]
   }
