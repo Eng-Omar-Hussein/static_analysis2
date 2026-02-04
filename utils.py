@@ -21,7 +21,7 @@ def sha256sum(file_path):
     return h.hexdigest()
 
 
-def vt_lookup(ioc_value: str, ioc_type: str) -> dict | None:
+def vt_lookup(ioc_value: str, ioc_type: str) -> dict :
     """
     Fast VT lookup (NO rescan)
     ioc_type: url | domain | ip | hash
