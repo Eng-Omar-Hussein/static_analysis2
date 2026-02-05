@@ -5,4 +5,5 @@ pika
 sqlalchemy
 psycopg2-binary
 python-multipart
-requests
+requests==2.25.1
+django==1.11.29
