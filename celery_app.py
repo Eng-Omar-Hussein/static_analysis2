@@ -1,9 +1,17 @@
+import os
+
 from celery import Celery
+from dotenv import load_dotenv
+
+load_dotenv()
+
+broker_url = os.getenv("broker_url")
+result_backend = os.getenv("result_backend")
 
 celery = Celery(
     "static_analysis",
-    broker="amqp://guest:guest@localhost:5672//",
-    backend="db+postgresql://strelka:password@localhost/analysis_db",
+    broker = broker_url,
+    backend = result_backend,
     include=["tasks"],   
 )
 
