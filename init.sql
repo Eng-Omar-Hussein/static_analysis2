@@ -20,3 +20,19 @@ CREATE TABLE IF NOT EXISTS analysis_results (
 
 CREATE INDEX IF NOT EXISTS idx_analysis_results_sha256
 ON analysis_results (sha256);
+
+CREATE TABLE IF NOT EXISTS url_analysis_results (
+    url_hash VARCHAR(64) PRIMARY KEY,
+    url VARCHAR(2048) NOT NULL,
+    domain VARCHAR(255),
+    score INTEGER,
+    verdict VARCHAR(50),
+    reasons JSON,
+    final_url VARCHAR(2048),
+    http_status INTEGER,
+    redirect_count INTEGER,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_url_analysis_results_url_hash
+ON url_analysis_results (url_hash);

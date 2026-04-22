@@ -1,11 +1,12 @@
-# Static Analysis Automation with FastAPI, Celery, and Strelka
+# Automated Static Analysis 
 
-This project provides an automated static analysis framework for **files** and **URLs** using [Strelka](https://github.com/target/strelka) and multi-layer security heuristics. It queues file analysis tasks with Celery, stores results in a PostgreSQL database, and exposes FastAPI endpoints for uploading files, submitting URLs, and retrieving results.
+This project provides an automated static analysis framework for **files** using [Strelka] (https://github.com/target/strelka) and **URLs** and multi-layer security heuristics. It queues file analysis tasks with Celery, stores results in a PostgreSQL database, and exposes FastAPI endpoints for uploading files, submitting URLs, and retrieving results.
 
 ### Key Features
 * **File Analysis:** Scan uploaded files with Strelka, ClamAV, YARA, entropy checks, and IOC extraction.
 * **URL Analysis:** Multi-layer URL inspection including structure, domain WHOIS/DNS, HTML content, and threat intelligence.
 * **Deduplication:** Previously analyzed files return results immediately (based on SHA256).
+* **URL Deduplication:** Previously analyzed URLs return results immediately (based on URL hash).
 * **Queued Analysis:** Heavy files are processed asynchronously using Celery and RabbitMQ.
 * **Scoring Logic:** Assigns a maliciousness score, verdict, and specific reasons based on analysis results.
 * **Explainable Verdicts:** Every triggered indicator is returned with a human-readable explanation.
@@ -192,6 +193,8 @@ Retrieve the file analysis status and report.
 ### Analyze URL (`POST /analyze-url`)
 Submit a URL for multi-layer security analysis. The analysis is performed synchronously and returns results immediately.
 
+If the same URL was already analyzed before, the cached result is returned immediately from the database.
+
 **Request Body:**
 ```json
 {
@@ -242,12 +245,16 @@ Submit a URL for multi-layer security analysis. The analysis is performed synchr
 static_analysis/
 │
 ├─ app.py             # FastAPI application entry point
+├─ file_routes.py     # File analysis API endpoints
+├─ url_routes.py      # URL analysis API endpoint
 ├─ celery_app.py      # Celery configuration
 ├─ tasks.py           # Celery tasks definitions
 ├─ db.py              # SQLAlchemy engine and session setup
-├─ model.py           # SQLAlchemy database models
-├─ utils.py           # Helper functions (SHA256, etc.)
-├─ scoring.py         # scoring logic
+├─ model.py           # SQLAlchemy models (file + URL analysis results)
+├─ utils.py           # Shared helper functions (SHA256, VT, DNS, HTML parsing, etc.)
+├─ file_scoring.py    # File analysis scoring logic
+├─ url_scoring.py     # URL analysis scoring logic
+├─ scoring.py         # Compatibility exports for old imports
 ├─ uploads/           # Directory for temp storage of uploaded files 
 ├─ requirements.txt   # Project dependencies
 └─ README.md          # Documentation

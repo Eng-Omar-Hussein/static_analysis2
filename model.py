@@ -12,3 +12,18 @@ class AnalysisResult(Base):
     verdict = Column(String(50))
     reasons = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class URLAnalysisResult(Base):
+    __tablename__ = "url_analysis_results"
+
+    url_hash = Column(String(64), primary_key=True, index=True)
+    url = Column(String(2048), nullable=False)
+    domain = Column(String(255))
+    score = Column(Integer)
+    verdict = Column(String(50))
+    reasons = Column(JSON)
+    final_url = Column(String(2048))
+    http_status = Column(Integer)
+    redirect_count = Column(Integer)
+    created_at = Column(DateTime, default=datetime.utcnow)

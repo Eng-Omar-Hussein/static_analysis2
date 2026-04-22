@@ -1,7 +1,7 @@
 from celery_app import celery
 from db import SessionLocal
 from model import AnalysisResult
-from scoring import compute_score
+from file_scoring import compute_score
 import subprocess, json, os
 from dotenv import load_dotenv
 
