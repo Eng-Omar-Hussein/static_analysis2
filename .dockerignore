@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+env/
+venv/
+ENV/
+dist/
+build/
+
+# VS Code
+.vscode/
+
+# Docker
+Dockerfile*
+docker-compose*
+
+# Ignore local config files
+*.env
+.env.*
+
+# hidden files and directories
+.git/
+.gitignore
+.github/
+*.md
