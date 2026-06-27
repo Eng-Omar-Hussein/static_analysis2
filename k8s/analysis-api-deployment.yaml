@@ -15,12 +15,10 @@ metadata:
   namespace: analysis-api
 data:
   Strelka_Dir: "./strelka-oneshot"
+  Strelka_Server: "http://strelka.sandbox.svc.cluster.local:5000"
   POSTGRES_DB: "analysis_db"
   POSTGRES_HOST: "postgres.analysis-api.svc.cluster.local"
   RABBITMQ_HOST: "rabbitmq.analysis-api.svc.cluster.local"
-  # Endpoints for external namespaces
-  AI_MODEL_URL: "http://header-nlp.ai-model-api.svc.cluster.local:8000"
-  SANDBOX_URL: "http://strelka.sandbox.svc.cluster.local:5000"
 
 ---
 # 3. POSTGRESQL (State Storage)
