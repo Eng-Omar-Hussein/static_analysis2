@@ -33,14 +33,12 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image ') {
+        stage('Build Docker Image') {
             steps {
                 sh '''
                     git clone https://github.com/target/strelka.git || true
-                    cd strelka/src/go/cmd/strelka-oneshot
-                    docker run --rm -v "$PWD":/go/src/github.com/target/strelka golang:1.20 bash -c "cd /go/src/github.com/target/strelka/src/go/cmd/strelka-oneshot && go build -o strelka-oneshot"
-                    mv strelka-oneshot ../../../../../
-                    cd ../../../../../
+                    docker run --rm -v "$PWD":/target golang:1.25 bash -c "cd /target/strelka/src/go/cmd/strelka-oneshot && go build -o strelka-oneshot"
+                    mv strelka/src/go/cmd/strelka-oneshot .
                     rm -r strelka
                     ls -la
                     docker build -t ${DOCKERHUB_REPO}:${IMAGE_TAG} -t ${DOCKERHUB_REPO}:latest .
