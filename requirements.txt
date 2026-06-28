@@ -22,3 +22,4 @@ pikepdf
 oletools
 rarfile
 py7zr
+python-magic
