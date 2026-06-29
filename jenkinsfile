@@ -36,6 +36,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
+                    rm -r strelka || true
                     git clone https://github.com/target/strelka.git || true
                     docker run --rm -v "$PWD":/target golang:1.25 bash -c "cd /target/strelka/src/go/cmd/strelka-oneshot && go build -buildvcs=false -o strelka-oneshot"
                     mv strelka/src/go/cmd/strelka-oneshot .
