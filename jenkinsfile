@@ -125,6 +125,7 @@ pipeline {
             steps {
                 sh '''
                     . venv/bin/activate
+                    pip install --upgrade pip
                     pip install trivy || true
                     trivy fs --format json --output trivy-fs-report.json . || true
                     trivy image --format json --output trivy-image-report.json ${DOCKERHUB_REPO}:${IMAGE_TAG} || true
