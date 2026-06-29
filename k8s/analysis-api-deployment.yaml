@@ -168,9 +168,7 @@ spec:
                 name: analysis-config
             - secretRef:
                 name: analysis-secrets
-          volumeMounts:
-          - name: shared-uploads
-            mountPath: /app/uploads
+
           resources:
             requests:
               memory: "128Mi"
@@ -178,11 +176,6 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-      volumes:
-        - name: shared-uploads
-          hostPath:
-            path: /tmp/app/uploads
-            type: DirectoryorCreate
 
 ---
 apiVersion: v1
@@ -225,9 +218,6 @@ spec:
                 name: analysis-config
             - secretRef:
                 name: analysis-secrets
-          volumeMounts:
-          - name: shared-uploads
-            mountPath: /app/uploads
           resources:
             requests:
               memory: "256Mi"
@@ -235,8 +225,3 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "1000m"
-      volumes:
-        - name: shared-uploads
-          hostPath:
-            path: /tmp/app/uploads
-            type: DirectoryorCreate
