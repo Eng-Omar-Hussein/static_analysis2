@@ -29,10 +29,10 @@ metadata:
 spec:
   storageClassName: gp2
   accessModes:
-    - ReadWriteOnce  # Critical: Allows multiple pods to read/write simultaneously
+    - ReadWriteMany  # Critical: Allows multiple pods to read/write simultaneously
   resources:
     requests:
-      storage: 3Gi
+      storage: 2Gi
 
 ---
 # 3. POSTGRESQL (State Storage)
