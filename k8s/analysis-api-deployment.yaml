@@ -21,6 +21,20 @@ data:
   RABBITMQ_HOST: "rabbitmq.analysis-api.svc.cluster.local"
 
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-uploads-pvc
+  namespace: analysis-api
+spec:
+  storageClassName: gp2
+  accessModes:
+    - ReadWriteMany  # Critical: Allows multiple pods to read/write simultaneously
+  resources:
+    requests:
+      storage: 2Gi
+
+---
 # 3. POSTGRESQL (State Storage)
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -168,6 +182,9 @@ spec:
                 name: analysis-config
             - secretRef:
                 name: analysis-secrets
+          volumeMounts:
+          - name: shared-uploads
+            mountPath: /app/uploads
           resources:
             requests:
               memory: "128Mi"
@@ -175,6 +192,10 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
+      volumes:
+        - name: shared-uploads
+          persistentVolumeClaim:
+            claimName: shared-uploads-pvc
 
 ---
 apiVersion: v1
@@ -217,6 +238,9 @@ spec:
                 name: analysis-config
             - secretRef:
                 name: analysis-secrets
+          volumeMounts:
+          - name: shared-uploads
+            mountPath: /app/uploads
           resources:
             requests:
               memory: "256Mi"
@@ -224,3 +248,7 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "1000m"
+      volumes:
+        - name: shared-uploads
+          persistentVolumeClaim:
+            claimName: shared-uploads-pvc
