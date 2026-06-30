@@ -176,7 +176,12 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-
+          volumeMounts:
+            - name: uploads-volumes
+              mountPath: /app/uploads
+      volumes:
+        - name: uploads-volumes
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -212,7 +217,7 @@ spec:
         - name: celery-worker
           image: omarhussein2111/analysis-api:4-5b33e25
           command: ["celery"]
-          args: ["-A", "celery_app", "worker", "--loglevel=info"]
+          args: ["-A", "celery_app", "worker", "--loglevel=info"] 
           envFrom:
             - configMapRef:
                 name: analysis-config
@@ -225,3 +230,9 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "1000m"
+          volumeMounts:
+            - name: uploads-volumes
+              mountPath: /app/uploads
+      volumes:
+        - name: uploads-volumes
+          emptyDir: {}
